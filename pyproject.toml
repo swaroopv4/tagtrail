@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tagtrail"
+version = "0.1.0"
+description = "Evidence-linked engineering document reconciliation and reviewed corrections"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi==0.162.2", "uvicorn==0.54.0", "python-multipart==0.0.33",
+  "openpyxl==3.1.5", "pypdf==7.0.0", "ezdxf==1.4.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0", "httpx==0.28.1", "ruff==0.17.4", "reportlab==5.1.0", "playwright==1.65.0"]
+
+[tool.setuptools]
+packages = ["tagtrail"]
+
+[tool.setuptools.package-data]
+tagtrail = ["static/*", "samples/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]

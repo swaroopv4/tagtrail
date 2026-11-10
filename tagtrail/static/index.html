@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Compare engineering registers, schedules and drawing tags. Review evidence and export approved corrections."
+    />
+    <title>TagTrail — Engineering document review</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="TagTrail home"
+        ><span class="brand-mark">T<span>↗</span></span
+        ><strong>TagTrail</strong
+        ><span class="brand-caption">DOCUMENT REVIEW</span></a
+      >
+      <div class="header-actions">
+        <span class="local-badge"><i></i> Local workspace</span
+        ><button id="new-project" class="button quiet">New project</button
+        ><button id="load-demo" class="button dark">
+          Load demo package <span>↗</span>
+        </button>
+      </div>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">FROM DISCONNECTED FILES TO REVIEWABLE CHANGES</p>
+          <h1>
+            One tag. Every document.<br /><span
+              >Nothing lost between them.</span
+            >
+          </h1>
+          <p class="intro-copy">
+            Compare an equipment register with schedules and drawing labels.<br />See
+            the evidence, review each discrepancy, and export approved
+            corrections.
+          </p>
+        </div>
+        <div class="intro-note">
+          <span class="mini-label">THE REVIEW LOOP</span>
+          <ol>
+            <li><b>01</b>Choose your comparison register</li>
+            <li><b>02</b>Check the connected documents</li>
+            <li><b>03</b>Review evidence and proposed edits</li>
+            <li><b>04</b>Export copies with an audit trail</li>
+          </ol>
+        </div>
+      </section>
+      <div id="notification" role="status" aria-live="polite" hidden></div>
+      <section class="workspace-head">
+        <div>
+          <p class="eyebrow">REVIEW WORKSPACE</p>
+          <label class="sr-only" for="project-select">Project</label
+          ><select id="project-select">
+            <option value="">Choose a project</option>
+          </select>
+        </div>
+        <div class="workspace-actions">
+          <span id="run-state">No package selected</span
+          ><button id="run-checks" class="button outline" disabled>
+            Run checks</button
+          ><button id="export-pack" class="button green" disabled>
+            Export review pack <span>↓</span>
+          </button>
+        </div>
+      </section>
+      <div id="metrics" class="metrics"></div>
+      <div class="workbench">
+        <aside class="package-panel">
+          <div class="panel-heading">
+            <h2>Document package</h2>
+            <span id="document-count" class="count-badge">0</span>
+          </div>
+          <p class="panel-copy">
+            The register is your chosen comparison baseline. A discrepancy is a
+            review task, not a design verdict.
+          </p>
+          <div id="documents" class="document-list"></div>
+          <form id="upload-form" class="upload-form">
+            <h3>Add a document</h3>
+            <label for="upload-role">Document purpose</label
+            ><select id="upload-role" name="role">
+              <option value="reference">Reference to check</option>
+              <option value="register">Comparison register</option>
+            </select>
+            <p id="register-warning" class="small-note" hidden>
+              A new register replaces the current baseline. Existing review
+              decisions become stale.
+            </p>
+            <label for="upload-file">File</label
+            ><input
+              id="upload-file"
+              type="file"
+              accept=".csv,.xlsx,.pdf,.dxf"
+              required
+            />
+            <p class="small-note">
+              CSV, XLSX, text PDF or DXF · 8 MB each<br />Register columns: tag,
+              nominal_size, material, service
+            </p>
+            <label for="upload-revision">Revision label</label
+            ><input
+              id="upload-revision"
+              value="Rev A"
+              maxlength="50"
+              placeholder="e.g. Rev A"
+            />
+            <label class="check-label"
+              ><input id="complete-list" type="checkbox" /><span
+                >This table is a complete list of register tags</span
+              ></label
+            >
+            <p class="small-note">
+              Enable only when every baseline tag should appear. Drawings are
+              checked as partial references.
+            </p>
+            <button
+              id="upload-button"
+              class="button outline full"
+              type="submit"
+              disabled
+            >
+              Upload document
+            </button>
+            <a class="template-link" href="/api/template"
+              >Download register template ↓</a
+            >
+          </form>
+        </aside>
+        <section class="results-panel">
+          <div class="tabs" role="tablist" aria-label="Workspace views">
+            <button
+              class="tab active"
+              data-tab="findings"
+              role="tab"
+              aria-selected="true"
+            >
+              Findings <span id="finding-count">0</span></button
+            ><button
+              class="tab"
+              data-tab="sources"
+              role="tab"
+              aria-selected="false"
+            >
+              Source records</button
+            ><button
+              class="tab"
+              data-tab="audit"
+              role="tab"
+              aria-selected="false"
+            >
+              Activity
+            </button>
+          </div>
+          <div class="filter-bar">
+            <label class="sr-only" for="search">Search tags or documents</label
+            ><input
+              id="search"
+              type="search"
+              placeholder="Search tag or document…"
+            /><label class="sr-only" for="status-filter">Review status</label
+            ><select id="status-filter">
+              <option value="all">All decisions</option>
+              <option value="pending">Pending review</option>
+              <option value="approved">Approved edits</option>
+              <option value="acknowledged">Acknowledged</option>
+              <option value="dismissed">Dismissed</option>
+            </select>
+          </div>
+          <div id="warnings"></div>
+          <div id="results-content"></div>
+        </section>
+        <aside class="review-panel">
+          <div class="panel-heading">
+            <h2>Evidence & decision</h2>
+            <span class="small-dot"></span>
+          </div>
+          <div id="review-content"></div>
+        </aside>
+      </div>
+      <footer>
+        <span>TagTrail / independent engineering project</span
+        ><span>Runs locally · no model calls · originals preserved</span
+        ><a href="/docs" target="_blank" rel="noopener">API reference ↗</a>
+      </footer>
+    </main>
+    <dialog id="project-dialog">
+      <form id="project-form">
+        <p class="eyebrow">A NEW REVIEW</p>
+        <h2>Create a project</h2>
+        <p>Keep the register, reference files and review history together.</p>
+        <label for="project-name">Project name</label
+        ><input
+          id="project-name"
+          minlength="2"
+          maxlength="100"
+          placeholder="e.g. Cooling water expansion"
+          required
+        />
+        <div class="dialog-actions">
+          <button type="button" id="cancel-project" class="button quiet">
+            Cancel</button
+          ><button type="submit" class="button dark">Create project</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

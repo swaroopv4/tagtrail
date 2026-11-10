@@ -1,0 +1,10 @@
+services:
+  tagtrail:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - tagtrail-data:/app/data
+    restart: unless-stopped
+volumes:
+  tagtrail-data:

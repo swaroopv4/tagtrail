@@ -1,0 +1,8 @@
+tag,description,nominal_size,material,service
+P101,Main cooling pump,"6""",cs,Cooling water
+P-101B,Standby cooling pump,6 in,CS,Cooling water
+HV-201,Isolation valve,4 in,CS,Isolation
+PT-301,Pressure transmitter,,,Pressure monitoring
+L-2101,Discharge line,6 in,CS,Transfer
+P-101B,Duplicate legacy entry,6 in,CS,Cooling water
+P-999,Unregistered pump,2 in,SS,Drain
