@@ -1,5 +1,7 @@
 # TagTrail
 
+[![Verify TagTrail](https://github.com/swaroopv4/tagtrail/actions/workflows/check.yml/badge.svg)](https://github.com/swaroopv4/tagtrail/actions/workflows/check.yml)
+
 **Find the mismatch. Follow the evidence. Export the reviewed correction.**
 
 TagTrail is a working local application for comparing an equipment register with schedules and tags extracted from engineering drawings. It turns a disagreement into a source-linked review item, then produces corrected copies only for approved cell changes.

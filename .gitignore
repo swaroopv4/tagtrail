@@ -8,3 +8,6 @@ data/
 test-results/
 playwright-report/
 *.sqlite*
+build/
+dist/
+*.egg-info/

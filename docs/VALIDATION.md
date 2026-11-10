@@ -15,7 +15,7 @@ The synthetic demo has four active files, six register tags, eight findings and 
 
 This is a defined synthetic regression set, not accuracy measured on real engineering packages. Geometry, connectivity, standards compliance, scanned-drawing OCR, native DWG, large-file performance, malicious parser isolation and production multi-user operation are outside the implementation.
 
-Python 3.12 and Docker setup are provided for reproducibility; local runtime verification used Python 3.11. GitHub Actions is configured to exercise 3.11, 3.12 and Chromium. A green workflow should be confirmed on the published commit rather than assumed from the configuration.
+The [first published GitHub Actions run](https://github.com/swaroopv4/tagtrail/actions/runs/42796173945) passed on Ubuntu with Python 3.11, Python 3.12 and Chromium. Local runtime verification used Python 3.11 on Windows. A wheel was also built and inspected to verify that the browser assets and synthetic fixtures are included in the installable package. The supplied Docker image was not executed as part of this validation.
 
 An upstream Starlette warning about its legacy httpx test-client adapter appeared locally; it did not fail the tests. The application browser test uses the real HTTP server rather than that adapter.
 
